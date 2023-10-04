@@ -6,5 +6,15 @@ $ pip3 install "apache-airflow[celery]==2.5.3" --constraint "https://raw.githubu
 
 Create a user:
 ```
-$airflow users create -e reginagurung@yahoo.co.uk -f Regina -l Gurung -p password -r Admin -u rgurung
+$ airflow users create -e reginagurung@yahoo.co.uk -f Regina -l Gurung -p password -r Admin -u rgurung
+```
+
+Start Scheduler:
+```
+$ airflow scheduler
+```
+
+Start webserver
+```
+$ airflow webserver
 ```
