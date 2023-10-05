@@ -29,4 +29,16 @@ with DAG(
         sql = 'create_table_customer_purchases.sql'
     )
 
-create_table_customers >> create_table_customer_purchases
+    insert_customers = PostgresOperator(
+        task_id = 'insert_customers',
+        postgres_conn_id = 'postgres_conn',
+        sql = 'insert_customers.sql'
+    )
+
+    insert_customers_purchases = PostgresOperator(
+        task_id = 'insert_customers_purchases',
+        postgres_conn_id = 'postgres_conn',
+        sql = 'insert_customers_purchases.sql'
+    )
+
+create_table_customers >> create_table_customer_purchases >> insert_customers >> insert_customers_purchases
