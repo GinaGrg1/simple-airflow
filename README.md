@@ -8,6 +8,9 @@ $ pip3 install psycopg2-binary
 
 
 $ pip3 install apache-airflow-providers-postgres  -- This is needed to be able to make connection to postgres from the UI.
+
+$ pip3 install apache-airflow-providers-amazon
+
 ```
 
 Create a user:
