@@ -105,7 +105,7 @@ with DAG(
     )
 
     insert_data_customer_credit_card_details_task = PythonOperatorTask(
-        task_id = 'create_table_customer_credit_card_details_task',
+        task_id = 'insert_data_customer_credit_card_details_task',
         python_callable = create_table_customer_credit_card_details,
         op_kwargs = {
             'json_data': '{{ ti.xcom_pull(task_ids="remove_null_values_task") }}'
