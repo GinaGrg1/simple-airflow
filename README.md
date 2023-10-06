@@ -24,3 +24,22 @@ Start webserver
 ```
 $ airflow webserver
 ```
+
+To change the metadata db from SQLite to Postgres, make changes in the airflow.cfg file:
+```
+[core]
+executor = LocalExecutor
+
+[database]
+# The SqlAlchemy connection string to the metadata database.
+# SqlAlchemy supports many different database engine, more information
+# their website.
+# Create airflow_db
+sql_alchemy_conn = postgresql://username:password@localhost:5432/airflow_db
+
+```
+
+Initialize airflow db
+`$ airflow db init`
+
+
