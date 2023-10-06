@@ -40,6 +40,6 @@ sql_alchemy_conn = postgresql://username:password@localhost:5432/airflow_db
 ```
 
 Initialize airflow db
-`$ airflow db init`
+`$ airflow db init` and create new user
 
 
