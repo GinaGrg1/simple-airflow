@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from airflow.utils.dates import days_ago
 
 from airflow import DAG
+from airflow.models.baseoperator import chain
 from airflow.operators.python import PythonOperator
 
 import get_insurance_data as ins
@@ -44,4 +45,8 @@ with DAG(
         python_callable = ins.groupby_region
     )
 
-read_csv_file >> remove_null_values >> [groupby_smoker, groupby_region]
+chain(
+read_csv_file,
+remove_null_values,
+[groupby_smoker, groupby_region]
+)
