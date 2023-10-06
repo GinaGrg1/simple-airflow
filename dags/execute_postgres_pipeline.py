@@ -40,5 +40,24 @@ with DAG(
         postgres_conn_id = 'postgres_conn',
         sql = 'insert_customers_purchases.sql'
     )
+        
+    joining_table = PostgresOperator(
+        task_id = 'joining_table',
+        postgres_conn_id = 'postgres_conn',
+        sql = 'joining_table.sql'
+    )
 
-create_table_customers >> create_table_customer_purchases >> insert_customers >> insert_customers_purchases
+    filtering_customers = PostgresOperator(
+        task_id = 'filtering_table',
+        postgres_conn_id = 'postgres_conn',
+        sql = '''
+            SELECT name, product, price
+            FROM complete_customer_details
+            WHERE price BETWEEN %(lower_bound)s AND %(upper_bound)s
+        ''',
+        parameters = {'lower_bound': 5, 'upper_bound': 9}
+    )
+
+    create_table_customers >> create_table_customer_purchases >> \
+        insert_customers >> insert_customers_purchases >> \
+        joining_table >> filtering_customers
