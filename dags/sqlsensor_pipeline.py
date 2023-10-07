@@ -86,5 +86,5 @@ INSERT INTO laptops (id, company, product, type_name, price_euros)
 VALUES (2, 'HP', 'Inspiron 3566', 'Notebook', 900);
 
 INSERT INTO laptops (id, company, product, type_name, price_euros)
-VALUES (2, 'MacBook Pro', 'Some Fancy OS', 'Notebook', 950);
+VALUES (4, 'MacBook Pro', 'Some Fancy OS', 'Notebook', 950);
 """
