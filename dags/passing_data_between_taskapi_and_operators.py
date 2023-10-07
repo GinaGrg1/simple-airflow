@@ -4,6 +4,7 @@ from pathlib import Path
 from airflow.utils.dates import days_ago
 
 from airflow.models import Variable
+from airflow.models import TaskInstance
 from airflow.decorators import dag, task
 from airflow.operators.python import PythonOperator
 
@@ -24,10 +25,14 @@ FILENAME=Variable.get('car_filename')
 )
 def interoperating_with_taskflow():
 
-    def read_csv_file():
-        df = pd.read_csv(f'{Path.home()}/airflow/datasets/{FILENAME}')
-        return df.to_json()
+    # def read_csv_file():
+    #     df = pd.read_csv(f'{Path.home()}/airflow/datasets/{FILENAME}')
+    #     return df.to_json()
 
+    def read_csv_file(ti: TaskInstance):
+        df = pd.read_csv(f'{Path.home()}/airflow/datasets/{FILENAME}')
+        ti.xcom_push(key='original_data', value=df.to_json())
+        
     @task    
     def filter_teslas(json_data):
         df = pd.read_json(json_data)
@@ -45,7 +50,7 @@ def interoperating_with_taskflow():
         python_callable = read_csv_file
     )
 
-    filtered_teslas_json = filter_teslas(read_csv_file_task.output)
+    filtered_teslas_json = filter_teslas(read_csv_file_task.output['original_data']) # if not using xcom.push, just use .output
 
     write_csv_result_task = PythonOperator(
         task_id = 'write_csv_result_task',
