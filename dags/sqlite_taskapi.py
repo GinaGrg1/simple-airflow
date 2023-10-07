@@ -17,7 +17,7 @@ default_args = {
     schedule_interval = '@once',
     tags = ['sqlite', 'python', 'taskflow_api', 'xcoms'])
 def data_transformation_storage_pipeline():
-
+    # by default the task_id is the name of the function when using task api.
     @task
     def read_car_data():
         df = pd.read_csv(f'{Path.home()}/airflow/datasets/car_data.csv')
